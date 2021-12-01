@@ -1,0 +1,42 @@
+# Prometheus全局配置项
+global:
+  scrape_interval: 15s # 设定抓取数据的周期，默认为1min
+  evaluation_interval: 15s # 设定更新rules文件的周期，默认为1min
+  scrape_timeout: 15s # 设定抓取数据的超时时间，默认为10s  external_labels: # 额外的属性，会添加到拉取得数据并存到数据库中   monitor: 'codelab_monitor'
+
+# scape配置
+scrape_configs:
+  - job_name: 'prometheus' # job_name默认写入timeseries的labels中，可以用于查询使用
+    scrape_interval: 15s # 抓取周期，默认采用global配置
+    static_configs: # 静态配置
+      - targets: [ 'localhost:9090' ] # prometheus所要抓取数据的地址，即instance实例项
+  - job_name: 'leo-job-admin'
+    scrape_interval: 5s
+    metrics_path: '/leo-job-admin/actuator/prometheus'
+    scheme: http
+    static_configs:
+      - targets: [ '172.26.209.218:1000' ]
+  - job_name: 'spider-data'
+    scrape_interval: 5s
+    metrics_path: '/spider-data/actuator/prometheus'
+    scheme: http
+    static_configs:
+      - targets: [ '172.26.209.218:10001' ]
+  - job_name: 'job-executor'
+    scrape_interval: 5s
+    metrics_path: '/job-executor/actuator/prometheus'
+    scheme: http
+    static_configs:
+      - targets: [ '172.26.209.218:1002' ]
+  - job_name: 'mysql'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '172.26.209.218:9104' ]
+  - job_name: 'node-exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '172.26.209.218:9100' ]
+  - job_name: 'redis-exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '172.26.209.218:9121' ]

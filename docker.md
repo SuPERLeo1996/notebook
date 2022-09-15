@@ -1,5 +1,15 @@
 ### docker 安装组件 命令整理
 
+#### mysql 安装
+> docker pull mysql:5.7
+>
+> docker run -p 3306:3306 --name mysql --restart=always 
+> -v /opt/mysql/log:/var/log/mysql 
+> -v /opt/mysql/data:/var/lib/mysql 
+> -v /opt/mysql/conf:/etc/mysql 
+> -e MYSQL_ROOT_PASSWORD=123456 
+> -d mysql:5.7
+
 
 #### nacos 运行
 
